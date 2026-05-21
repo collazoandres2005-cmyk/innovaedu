@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InnovaEdu — Asistente de Innovación con IA</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <i class="ti ti-bulb"></i>
+        </div>
+        <div>
+          <h1 class="brand">InnovaEdu</h1>
+          <span class="brand-sub">Asistente de Innovación con IA</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="course-badge">Curso de Innovación — 16 sesiones</span>
+        <button class="api-btn" id="api-config-btn" title="Configurar API Key">
+          <i class="ti ti-key"></i> API Key
+        </button>
+      </div>
+    </header>
+
+    <!-- API KEY MODAL -->
+    <div class="modal-overlay hidden" id="api-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3><i class="ti ti-key"></i> Configurar Google Gemini API Key</h3>
+          <button class="modal-close" id="modal-close"><i class="ti ti-x"></i></button>
+        </div>
+        <p class="modal-desc">
+          Gemini es completamente gratis. Tu API Key se guarda solo en tu navegador y nunca sale de tu dispositivo.
+        </p>
+        <div class="form-group">
+          <label>Google Gemini API Key</label>
+          <input type="password" id="api-key-input" placeholder="AIza..." />
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="modal-cancel">Cancelar</button>
+          <button class="btn-primary" id="modal-save">
+            <i class="ti ti-check"></i> Guardar
+          </button>
+        </div>
+        <p class="modal-hint">
+          Obtén tu API Key gratis en <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- LAYOUT -->
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+      <nav class="sidebar">
+        <div class="sidebar-label">Módulos del Curso</div>
+        <button class="nav-btn active" data-module="tendencias">
+          <i class="ti ti-world"></i>
+          <span>Megatendencias</span>
+          <small>Sesión 3</small>
+        </button>
+        <button class="nav-btn" data-module="jtbd">
+          <i class="ti ti-target"></i>
+          <span>Jobs To Be Done</span>
+          <small>Sesión 2</small>
+        </button>
+        <button class="nav-btn" data-module="canvas">
+          <i class="ti ti-layout-board"></i>
+          <span>Canvas Generator</span>
+          <small>Sesión 12</small>
+        </button>
+        <button class="nav-btn" data-module="design">
+          <i class="ti ti-heart-handshake"></i>
+          <span>Design Thinking</span>
+          <small>Sesión 9</small>
+        </button>
+        <button class="nav-btn" data-module="ocean">
+          <i class="ti ti-waves"></i>
+          <span>Océanos Azules</span>
+          <small>Sesión 10</small>
+        </button>
+        <button class="nav-btn" data-module="pitch">
+          <i class="ti ti-speakerphone"></i>
+          <span>Pitch Builder</span>
+          <small>Sesión 14</small>
+        </button>
+
+        <div class="sidebar-footer">
+          <div class="api-status" id="api-status">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">Sin API Key</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <main class="main">
+
+        <!-- MÓDULO 1: MEGATENDENCIAS -->
+        <section class="module active" id="mod-tendencias">
+          <div class="module-header">
+            <span class="module-badge">Sesión 3</span>
+            <h2>Explorador de Megatendencias</h2>
+            <p>Selecciona una megatendencia global y la IA identificará oportunidades de innovación para tu contexto colombiano.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Selecciona una megatendencia</div>
+            <div class="tags-grid" id="tend-grid">
+              <div class="tag-card" data-value="IA y Automatización">
+                <i class="ti ti-robot"></i>
+                <span>IA y Automatización</span>
+                <small>Tecnología</small>
+              </div>
+              <div class="tag-card" data-value="Economía Naranja">
+                <i class="ti ti-palette"></i>
+                <span>Economía Naranja</span>
+                <small>Cultura &amp; Creatividad</small>
+              </div>
+              <div class="tag-card" data-value="Sostenibilidad">
+                <i class="ti ti-leaf"></i>
+                <span>Sostenibilidad</span>
+                <small>Medio Ambiente</small>
+              </div>
+              <div class="tag-card" data-value="Salud Digital">
+                <i class="ti ti-device-heart-monitor"></i>
+                <span>Salud Digital</span>
+                <small>Healthtech</small>
+              </div>
+              <div class="tag-card" data-value="Educación 4.0">
+                <i class="ti ti-school"></i>
+                <span>Educación 4.0</span>
+                <small>Edtech</small>
+              </div>
+              <div class="tag-card" data-value="Economía Circular">
+                <i class="ti ti-refresh"></i>
+                <span>Economía Circular</span>
+                <small>Industria</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>¿En qué industria o contexto colombiano quieres aplicarla?</label>
+              <input type="text" id="tend-industria" placeholder="Ej: sector educativo en ciudades intermedias del Caribe" />
+            </div>
+            <button class="btn-primary" id="tend-btn">
+              <i class="ti ti-sparkles"></i> Analizar con IA
+            </button>
+          </div>
+
+          <div class="result-box hidden" id="tend-result"></div>
+        </section>
+
+        <!-- MÓDULO 2: JTBD -->
+        <section class="module" id="mod-jtbd">
+          <div class="module-header">
+            <span class="module-badge">Sesión 2</span>
+            <h2>Jobs To Be Done</h2>
+            <p>Aplica la teoría de Christensen &amp; Ulwick para entender qué "trabajo" contratan tus usuarios cuando usan tu producto.</p>
+          </div>
+
+          <div class="card">
+            <div class="form-group">
+              <label>¿Quién es tu usuario?</label>
+              <input type="text" id="jtbd-user" placeholder="Ej: estudiante universitario de 20 años en Barranquilla" />
+            </div>
+            <div class="form-group">
+              <label>¿Qué situación o problema enfrenta?</label>
+              <textarea id="jtbd-problema" placeholder="Describe el contexto y la dificultad que enfrenta tu usuario..."></textarea>
+            </div>
+            <button class="btn-primary" id="jtbd-btn">
+              <i class="ti ti-sparkles"></i> Analizar JTBD
+            </button>
+          </div>
+
+          <div class="result-box hidden" id="jtbd-result"></div>
+        </section>
+
+        <!-- MÓDULO 3: CANVAS -->
+        <section class="module" id="mod-canvas">
+          <div class="module-header">
+            <span class="module-badge">Sesión 12</span>
+            <h2>Canvas Generator</h2>
+            <p>Describe tu idea y la IA genera un Business Model Canvas o Lean Canvas completo y personalizado.</p>
+          </div>
+
+          <div class="card">
+            <div class="form-group">
+              <label>Tipo de Canvas</label>
+              <select id="canvas-tipo">
+                <option value="Business Model Canvas">Business Model Canvas (9 bloques — Osterwalder)</option>
+                <option value="Lean Canvas">Lean Canvas (Ash Maurya)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>¿Cuál es tu idea de negocio o producto?</label>
+              <textarea id="canvas-idea" placeholder="Describe tu idea, a quién va dirigida y qué problema resuelve..."></textarea>
+            </div>
+            <button class="btn-primary" id="canvas-btn">
+              <i class="ti ti-sparkles"></i> Generar Canvas
+            </button>
+          </div>
+
+          <div class="canvas-grid hidden" id="canvas-result"></div>
+        </section>
+
+        <!-- MÓDULO 4: DESIGN THINKING -->
+        <section class="module" id="mod-design">
+          <div class="module-header">
+            <span class="module-badge">Sesión 9</span>
+            <h2>Design Thinking</h2>
+            <p>Guía paso a paso por las 5 etapas del Design Thinking aplicadas directamente a tu proyecto.</p>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Selecciona la etapa en la que estás</div>
+            <div class="steps-list" id="dt-steps">
+              <div class="step-item active" data-step="1" data-name="Empatizar">
+                <div class="step-num">1</div>
+                <div class="step-info">
+                  <span class="step-title">Empatizar</span>
+                  <span class="step-desc">Entender profundamente al usuario</span>
+                </div>
+              </div>
+              <div class="step-item" data-step="2" data-name="Definir">
+                <div class="step-num">2</div>
+                <div class="step-info">
+                  <span class="step-title">Definir</span>
+                  <span class="step-desc">Enunciar el problema real</span>
+                </div>
+              </div>
+              <div class="step-item" data-step="3" data-name="Idear">
+                <div class="step-num">3</div>
+                <div class="step-info">
+                  <span class="step-title">Idear</span>
+                  <span class="step-desc">Generar soluciones creativas</span>
+                </div>
+              </div>
+              <div class="step-item" data-step="4" data-name="Prototipar">
+                <div class="step-num">4</div>
+                <div class="step-info">
+                  <span class="step-title">Prototipar</span>
+                  <span class="step-desc">Hacer tangible la solución</span>
+                </div>
+              </div>
+              <div class="step-item" data-step="5" data-name="Testear">
+                <div class="step-num">5</div>
+                <div class="step-info">
+                  <span class="step-title">Testear</span>
+                  <span class="step-desc">Validar con usuarios reales</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 1.25rem;">
+              <label>Describe tu proyecto o contexto</label>
+              <textarea id="dt-contexto" placeholder="Ej: Quiero mejorar la experiencia de aprendizaje en colegios rurales de Colombia usando tecnología accesible..."></textarea>
+            </div>
+            <button class="btn-primary" id="dt-btn">
+              <i class="ti ti-sparkles"></i> Guiarme en esta etapa
+            </button>
+          </div>
+
+          <div class="result-box hidden" id="dt-result"></div>
+        </section>
+
+        <!-- MÓDULO 5: OCÉANOS AZULES -->
+        <section class="module" id="mod-ocean">
+          <div class="module-header">
+            <span class="module-badge">Sesión 10</span>
+            <h2>Océanos Azules — Matriz ERRC</h2>
+            <p>Genera la Matriz ERRC (Eliminar, Reducir, Aumentar, Crear) de Kim &amp; Mauborgne para tu propuesta de valor.</p>
+          </div>
+
+          <div class="card">
+            <div class="form-group">
+              <label>¿Cuál es tu producto o servicio?</label>
+              <input type="text" id="ocean-producto" placeholder="Ej: App de tutoría entre pares para universitarios" />
+            </div>
+            <div class="form-group">
+              <label>¿Quiénes son tus competidores actuales en el mercado?</label>
+              <input type="text" id="ocean-comp" placeholder="Ej: clases particulares, YouTube, Udemy, grupos de WhatsApp" />
+            </div>
+            <button class="btn-primary" id="ocean-btn">
+              <i class="ti ti-sparkles"></i> Generar Matriz ERRC
+            </button>
+          </div>
+
+          <div class="errc-grid hidden" id="ocean-result">
+            <div class="errc-block errc-e">
+              <div class="errc-icon"><i class="ti ti-trash"></i></div>
+              <h4>Eliminar</h4>
+              <p id="errc-e-text"></p>
+            </div>
+            <div class="errc-block errc-r1">
+              <div class="errc-icon"><i class="ti ti-trending-down"></i></div>
+              <h4>Reducir</h4>
+              <p id="errc-r-text"></p>
+            </div>
+            <div class="errc-block errc-a">
+              <div class="errc-icon"><i class="ti ti-trending-up"></i></div>
+              <h4>Aumentar</h4>
+              <p id="errc-a-text"></p>
+            </div>
+            <div class="errc-block errc-c">
+              <div class="errc-icon"><i class="ti ti-plus-circle"></i></div>
+              <h4>Crear</h4>
+              <p id="errc-c-text"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- MÓDULO 6: PITCH BUILDER -->
+        <section class="module" id="mod-pitch">
+          <div class="module-header">
+            <span class="module-badge">Sesión 14</span>
+            <h2>Pitch Builder</h2>
+            <p>Construye un pitch poderoso con estructura Hero's Journey para presentar ante el panel evaluador en el Demo Day.</p>
+          </div>
+
+          <div class="card">
+            <div class="form-group">
+              <label>Nombre de tu proyecto</label>
+              <input type="text" id="pitch-nombre" placeholder="Ej: EduPar" />
+            </div>
+            <div class="form-group">
+              <label>¿Qué problema resuelve y a quién afecta?</label>
+              <textarea id="pitch-problema" placeholder="Describe el problema y el usuario que lo sufre con datos o evidencia si tienes..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>¿Cuál es tu solución y cómo genera valor diferencial?</label>
+              <textarea id="pitch-solucion" placeholder="Explica tu propuesta de valor y por qué es innovadora..."></textarea>
+            </div>
+            <button class="btn-primary" id="pitch-btn">
+              <i class="ti ti-sparkles"></i> Construir mi Pitch
+            </button>
+          </div>
+
+          <div class="result-box hidden" id="pitch-result"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
